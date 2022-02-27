@@ -1,0 +1,16 @@
+{
+  "name": "arcane-bot",
+  "version": "1.0.0",
+  "description": "A cron job to tweet random arcane screenshots",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "yarn build && node dist",
+    "build": "tsc"
+  },
+  "author": "Prateek Surana",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^4.5.5"
+  }
+}
