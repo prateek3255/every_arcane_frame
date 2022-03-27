@@ -31,6 +31,8 @@ interface RandomRow {
 }
 
 const fetchRandomRow = async () => {
+  // Query for creating the random timestamps view:
+  // create view random_timestamps as select * from timestamps order by random()
   const { data, error } = await supabase
     .from<RandomRow>("random_timestamps")
     .select(

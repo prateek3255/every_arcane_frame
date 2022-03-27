@@ -12,6 +12,94 @@ const episodes = [
       },
     ],
   },
+  {
+    id: 2,
+    start: 21,
+    end: 2196,
+    skip: [
+      {
+        start: 216,
+        end: 283,
+      },
+    ],
+  },
+  {
+    id: 3,
+    start: 40,
+    end: 2379,
+    skip: [
+      {
+        start: 117,
+        end: 185,
+      },
+    ],
+  },
+  {
+    id: 4,
+    start: 14,
+    end: 2211,
+    skip: [
+      {
+        start: 174,
+        end: 239,
+      },
+    ],
+  },
+  {
+    id: 5,
+    start: 14,
+    end: 2209,
+    skip: [
+      {
+        start: 306,
+        end: 373,
+      },
+    ],
+  },
+  {
+    id: 6,
+    start: 15,
+    end: 2298,
+    skip: [
+      {
+        start: 280,
+        end: 348,
+      },
+    ],
+  },
+  {
+    id: 7,
+    start: 17,
+    end: 2176,
+    skip: [
+      {
+        start: 159,
+        end: 226,
+      },
+    ],
+  },
+  {
+    id: 8,
+    start: 15,
+    end: 2181,
+    skip: [
+      {
+        start: 274,
+        end: 341,
+      },
+    ],
+  },
+  {
+    id: 9,
+    start: 19,
+    end: 2226,
+    skip: [
+      {
+        start: 147,
+        end: 215,
+      },
+    ],
+  },
 ];
 
 export interface TimestampRow {
