@@ -1,0 +1,36 @@
+name: Screenshot and tweet
+
+on:
+  push:
+  schedule:
+    - cron: "0 * * * *"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '16.x'
+      - uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+      - name: Setup FFmpeg
+        uses: FedericoCarboni/setup-ffmpeg@v1.1.0
+      - name: Install dependencies
+        run: yarn install
+      - name: Create env file
+        run: |
+          touch .env
+          echo SUPABASE_URL=${{ secrets.SUPABASE_URL }} >> .env
+          echo SUPABASE_TOKEN=${{ secrets.SUPABASE_TOKEN }} >> .env
+          echo TWITTER_ACCESS_TOKEN=${{ secrets.TWITTER_ACCESS_TOKEN }} >> .env
+          echo TWITTER_ACCESS_TOKEN_SECRET=${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }} >> .env
+          echo TWITTER_API_KEY=${{ secrets.TWITTER_API_KEY }} >> .env
+          echo TWITTER_API_SECRET=${{ secrets.TWITTER_API_SECRET }} >> .env
+          cat .env
+      - name: Run script
+        run: yarn start
+    timeout-minutes: 7
