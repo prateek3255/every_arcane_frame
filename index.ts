@@ -123,7 +123,7 @@ const replyToTweet = async ({
   const timestamp = `${prependZeroIfSingleDigit(
     Math.floor(position / 60)
   )}:${prependZeroIfSingleDigit(position % 60)}`;
-  const reply = `${episodeTitle} [${timestamp}]`;
+  const reply = `${episodeTitle} [${timestamp}] #arcane`;
   await twitterClient.tweets.statusesUpdate({
     status: `@arcane_frames ${reply}`,
     in_reply_to_status_id: tweetId,
