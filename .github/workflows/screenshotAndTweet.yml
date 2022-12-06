@@ -15,7 +15,7 @@ jobs:
           path: '**/node_modules'
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
       - name: Setup FFmpeg
-        uses: FedericoCarboni/setup-ffmpeg@v1.1.0
+        uses: FedericoCarboni/setup-ffmpeg@v2
       - name: Install dependencies
         run: yarn install
       - name: Create env file
