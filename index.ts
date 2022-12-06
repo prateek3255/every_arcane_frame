@@ -136,13 +136,13 @@ const screenshotAndTweet = async () => {
     const data = await fetchRandomRow();
     await takeScreenshotAndSaveImage(data.position, data.episodes.link);
     await compressImage();
-    const tweetData = await tweetImage();
-    await removeRowFromDatabase(data.id);
-    await replyToTweet({
-      tweetId: tweetData.id_str,
-      episodeTitle: data.episodes.title,
-      position: data.position,
-    });
+    // const tweetData = await tweetImage();
+    // await removeRowFromDatabase(data.id);
+    // await replyToTweet({
+    //   tweetId: tweetData.id_str,
+    //   episodeTitle: data.episodes.title,
+    //   position: data.position,
+    // });
   } catch (error) {
     console.log(error);
     throw error;
