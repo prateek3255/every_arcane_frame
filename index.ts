@@ -57,10 +57,10 @@ const fetchRandomRow = async () => {
 
 const takeScreenshotAndSaveImage = (timestamp: number, episodeURL: string) => {
   return new Promise((resolve, reject) => {
-    new ffmpeg(episodeURL)
+    new ffmpeg("https://github.com/prateek3255/blog/blob/master/src/videos/future-of-rendering-csr-demo.webm?raw=true")
       .takeScreenshots({
         count: 1,
-        timemarks: [`${timestamp}`],
+        timemarks: [`12`],
         filename: "screenshot",
       })
       .on("end", function () {
