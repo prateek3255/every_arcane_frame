@@ -51,7 +51,9 @@ const fetchRandomRow = async () => {
     console.log(error);
     throw error;
   }
-  console.log(`Random timestamp row title ${data.episodes.title} - ${data.position}`);
+  console.log(
+    `Random timestamp row title ${data.episodes.title} - ${data.position}`
+  );
   return data;
 };
 
@@ -82,6 +84,7 @@ const tweetImage = async () => {
     media_data: screenshotBase64,
     media_category: "tweet_image",
   });
+  console.log("Uploaded image to Twitter");
   const tweetData = await twitterClient.tweets.statusesUpdate({
     status: "",
     media_ids: data.media_id_string,
