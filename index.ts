@@ -1,19 +1,18 @@
 import ffmpeg from "fluent-ffmpeg";
-import fs from "fs";
 import dotenv from "dotenv";
 import imagemin from "imagemin";
 import imageminPngquant from "imagemin-pngquant";
-import { TwitterClient } from "twitter-api-client";
 import { createClient } from "@supabase/supabase-js";
+import { TwitterApi as TwitterClientV2 } from "twitter-api-v2";
 // import { generateTimestamps } from "./generateTimestamps";
 
 dotenv.config();
 
-const twitterClient = new TwitterClient({
-  apiKey: process.env.TWITTER_API_KEY ?? "",
-  apiSecret: process.env.TWITTER_API_SECRET ?? "",
+const twitterClient = new TwitterClientV2({
+  appKey: process.env.TWITTER_API_KEY ?? "",
+  appSecret: process.env.TWITTER_API_SECRET ?? "",
   accessToken: process.env.TWITTER_ACCESS_TOKEN,
-  accessTokenSecret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
+  accessSecret: process.env.TWITTER_ACCESS_TOKEN_SECRET,
 });
 
 const supabase = createClient(
@@ -77,18 +76,18 @@ const takeScreenshotAndSaveImage = (timestamp: number, episodeURL: string) => {
 };
 
 const tweetImage = async () => {
-  const screenshotBase64 = fs.readFileSync("./screenshot.png", {
-    encoding: "base64",
-  });
-  const data = await twitterClient.media.mediaUpload({
-    media_data: screenshotBase64,
-    media_category: "tweet_image",
-  });
+  const mediaId = await twitterClient.v1.uploadMedia('./screenshot.png');
   console.log("Uploaded image to Twitter");
-  const tweetData = await twitterClient.tweets.statusesUpdate({
-    status: "",
-    media_ids: data.media_id_string,
+  const tweetData = await twitterClient.v2.tweet({
+    text: "",
+    media: {
+      media_ids: [mediaId],
+    },
   });
+  if (tweetData.errors) {
+    console.log(tweetData.errors);
+    throw JSON.stringify(tweetData.errors);
+  }
   console.log("Tweeted image");
   return tweetData;
 };
@@ -127,10 +126,7 @@ const replyToTweet = async ({
     Math.floor(position / 60)
   )}:${prependZeroIfSingleDigit(position % 60)}`;
   const reply = `${episodeTitle} [${timestamp}] #arcane`;
-  await twitterClient.tweets.statusesUpdate({
-    status: `@arcane_frames ${reply}`,
-    in_reply_to_status_id: tweetId,
-  });
+  await twitterClient.v2.reply(`@arcane_frames ${reply}`, tweetId);
   console.log(`Replied to tweet - ${reply}`);
 };
 
@@ -142,7 +138,7 @@ const screenshotAndTweet = async () => {
     const tweetData = await tweetImage();
     await removeRowFromDatabase(data.id);
     await replyToTweet({
-      tweetId: tweetData.id_str,
+      tweetId: tweetData.data.id,
       episodeTitle: data.episodes.title,
       position: data.position,
     });
