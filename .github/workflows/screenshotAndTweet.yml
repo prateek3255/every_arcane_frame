@@ -1,8 +1,13 @@
 name: Screenshot and tweet
 
+# on:
+#   schedule:
+#     - cron: "0 * * * *"
+
 on:
-  schedule:
-    - cron: "0 * * * *"
+  push:
+    branches:
+      - main
 
 jobs:
   build:
