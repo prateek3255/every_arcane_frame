@@ -20,8 +20,7 @@ jobs:
           cache: 'yarn'
       - uses: FedericoCarboni/setup-ffmpeg@v3
         with:
-          ffmpeg-version: '6.1.1'
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ github.server_url == 'https://github.com' && github.token || '' }}
       - name: Install dependencies
         run: yarn install
       - name: Create env file
