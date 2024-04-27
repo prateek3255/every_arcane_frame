@@ -20,7 +20,7 @@ jobs:
           cache: 'yarn'
       - uses: FedericoCarboni/setup-ffmpeg@v3
         with:
-          ffmpeg-version: '5.1'
+          ffmpeg-version: '5.1.2'
           github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Install dependencies
         run: yarn install
